@@ -2,7 +2,7 @@
 
 import tf
 import rospy
-import storm32
+from storm32.storm32 import Storm32
 import numpy as np
 import serial
 import diagnostic_updater
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     frame_id = rospy.get_param("~frame_id", "gimbal_ref")
 
     # Start gimbal oject
-    gimbal = storm32.Storm32(port=port)
+    gimbal = Storm32(port=port)
     version = gimbal.get_version()
 
     # Print out some diagnostic info

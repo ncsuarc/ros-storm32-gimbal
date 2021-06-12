@@ -222,14 +222,14 @@ class Storm32(object):
             for i in range(0, len(self.buff) - 3):
 
                 # if header found and command is right, or command is ACK
-                if ord(self.buff[i]) == self._MSG_HEADER_IN and (
-                    (ord(self.buff[i + 2]) == cmd or
-                     (ord(self.buff[i + 2]) == self._CMD_ACK))):
+                if self.buff[i] == self._MSG_HEADER_IN and (
+                    (self.buff[i + 2] == cmd or
+                     (self.buff[i + 2] == self._CMD_ACK))):
 
                     # Check if all bytes of the message is here
-                    end_of_msg = i + ord(self.buff[i + 1]) + 5
+                    end_of_msg = i + self.buff[i + 1] + 5
                     if end_of_msg <= len(self.buff):
-                        msg = [ord(i) for i in self.buff[i:end_of_msg]]
+                        msg = [i for i in self.buff[i:end_of_msg]]
 
                         # TODO: Add CRC calculation.
 
@@ -289,7 +289,7 @@ class Storm32(object):
     def _bytes_to_uint(self, byte_low, byte_high):
         """Convert 2 bytes into a unsigned 16-bit int.
 
-        Args:
+        Args:self.buff[i]
             byte_low: the lower byte of the int
             byte_hight: the higher byte of the int
         returns: 16-bit unsiged "int"
