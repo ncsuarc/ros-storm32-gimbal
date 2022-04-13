@@ -49,8 +49,8 @@ def gimbal_quaternion_callback(msg):
                   msg.orientation.w)
     euler = tf.transformations.euler_from_quaternion(quaternion, axes="syxz")
     euler = list(map(encode_angle, euler))
-    rospy.logdebug_throttle(
-        1.0, "set_angles : pitch={0}, roll={1}, yaw={2}, unlimited={3}".format(
+    rospy.loginfo(
+        "set_angles : pitch={0}, roll={1}, yaw={2}, unlimited={3}".format(
             euler[0], euler[1], euler[2], msg.unlimited))
     try:
         response = gimbal.set_angles(*euler, unlimited=msg.unlimited)

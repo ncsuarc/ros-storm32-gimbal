@@ -271,9 +271,9 @@ class Storm32(object):
 
         returns: Little-endian "int" list of 4 "int".
         """
-
         a = list(struct.pack("!f", value))
-        return list(map(ord, reversed(a)))
+        a.reverse()
+        return a
 
     def _int_to_bytes(self, value):
         """Convert a signed or unsigned 16-bit "int" into a little-endian "int"
