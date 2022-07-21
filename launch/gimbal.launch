@@ -6,7 +6,7 @@
           output="screen"
           respawn="true">
       <param name="frame_id" value="gimbal_ref" />
-      <param name="port" value="/dev/ttyACM0" />
+      <param name="port" value="/dev/tty_gimbal" />
     </node>
   </group>
 </launch>
