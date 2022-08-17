@@ -17,10 +17,10 @@ class Storm32Node(Node):
         super().__init__("control")
 
         # Getting ROS params
-        self.declare_parameter("port", "/dev/ttyACM0")
-        self.declare_parameter("frame_id", "gimbal_ref")
-        self.port = self.get_parameter("port").get_parameter_value().string_value
-        self.frame_id = self.get_parameter("frame_id").get_parameter_value().string_value
+        self.declare_parameter("~/port", "/dev/ttyACM0")
+        self.declare_parameter("~/frame_id", "gimbal_ref")
+        self.port = self.get_parameter("~/port").get_parameter_value().string_value
+        self.frame_id = self.get_parameter("~/frame_id").get_parameter_value().string_value
 
         # Start gimbal object
         self.gimbal = Storm32(port=self.port)
@@ -44,10 +44,10 @@ class Storm32Node(Node):
                 self.gimbal_quaternion_callback,
                 queue_size=1)
             self.camera_pub = self.create_publisher(
-                QuaternionStamped, "camera_orientation", queue_size=1)
+                QuaternionStamped, "~/camera_orientation", queue_size=1)
             self.controller_pub = self.create_publisher(
-                QuaternionStamped, "controller_orientation", queue_size=1)
-            self.restart_srv = self.create_service(Trigger, "restart", self.restart_controller)
+                QuaternionStamped, "~/controller_orientation", queue_size=1)
+            self.restart_srv = self.create_service(Trigger, "~/restart", self.restart_controller)
 
             # Setup periodic callback for orientation publisher
             self.pub_timer = self.create_timer(0.01, self.pub_timer_callback)
