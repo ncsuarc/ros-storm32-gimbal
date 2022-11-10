@@ -1,5 +1,5 @@
 set -e
 
 # setup ros environment
-source "/opt/ros/$ROS_DISTRO/setup.bash"
+source "/app/install/local_setup.sh"
 ros2 launch storm32_gimbal gimbal_launch.py
