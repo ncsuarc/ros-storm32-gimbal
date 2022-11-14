@@ -1,22 +1,18 @@
 # ROS STorM32 Gimbal Driver
 
-[master]: https://dev.mcgillrobotics.com/buildStatus/icon?job=ros-storm32-gimbal/master
-[master url]: https://dev.mcgillrobotics.com/job/ros-storm32-gimbal/job/master
-[![master]][master url]
-
 This is a driver to communicate with STorM32 gimbal controllers.
 
 **You MUST configure your gimbal with the Windows app before using this
 package.**
 
-*This package has been tested on ROS Kinetic Kame on Ubuntu 16.04.*
+*This package has been tested on ROS Humble Hawksbill on Ubuntu 22.04.*
 
 ## Setting up
 
-You must clone this repository as `storm32_gimbal` into your catkin workspace:
+You must clone this repository as `storm32_gimbal` into your workspace:
 
 ```bash
-git clone https://github.com/mcgill-robotics/ros-storm32-gimbal storm32_gimbal
+git clone https://github.com/ncsuarc/storm32_gimbal
 ```
 
 ## Dependencies
@@ -26,6 +22,7 @@ Before proceeding, make sure to install all dependencies by running:
 ```bash
 rosdep update
 rosdep install storm32_gimbal
+python3 -m pip install transforms3d
 ```
 
 ## Compiling
@@ -34,26 +31,36 @@ You **must** compile this package before being able to run it. You can do so
 by running:
 
 ```bash
-catkin_make
+colcon build --symlink-install
 ```
 
-from the root of your `catkin` workspace.
+from the root of your workspace.
 
 ## Running
 
-To run, simply launch the `storm32_node.py` node as such:
+To run, the workspace environment must be overlaid.
 
 ```bash
-rosrun storm32_gimbal storm32_node.py
+. install/setup.bash
+```
+
+Simply launch the `storm32_node.py` node as such:
+
+```bash
+ros2 run storm32_gimbal gimbal
 ```
 
 You can change the port and TF frame ID by passing them as parameters
 
 ```bash
-rosrun storm32_gimbal storm32_node.py port:=<device_path> frame:=<frame_name>
+ros2 run storm32_gimbal storm32_node.py port:=<device_path> frame:=<frame_name>
 ```
 
-A sample launch file is available in the `launch` directory.
+A sample launch file is available in the `launch` directory and can be run with:
+
+```bash
+ros2 launch storm32_gimbal gimbal_launch.py
+```
 
 ## Interfacing
 
@@ -82,32 +89,3 @@ publishing a `GimbalOrientation` message to the `~target_orientation` topic.
 The `orientation` field is expected to be relative to the `gimbal_ref` frame,
 and the `unlimited` field defines whether the controller should attempt to
 limit its rotation to hard set limits on the STorM32 controller.
-
-## Contributing
-
-Contributions are welcome. Simply open an issue or pull request on the matter,
-and it will be accepted as long as it does not complicate the code base too
-much.
-
-As for style guides, we follow the ROS Python Style Guide for ROS-specifics and
-the Google Python Style Guide for everything else.
-
-### Linting
-
-We use [YAPF](https://github.com/google/yapf) for all Python formatting needs.
-You can auto-format your changes with the following command:
-
-```bash
-yapf --recursive --in-place --parallel .
-```
-
-We also use [catkin_lint](https://github.com/fkie/catkin_lint) for all `catkin`
-specifics. You can lint your changes as follows:
-
-```bash
-catkin lint --explain -W2 .
-```
-
-## License
-
-See [LICENSE](LICENSE).
