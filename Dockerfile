@@ -1,7 +1,7 @@
 FROM ros:humble
 ENV ROS_DISTRO humble
 WORKDIR /app
-COPY --from=arcros_interface /app/install install
+COPY --from=ghcr.io/ncsuarc/arcros_interface:main /app/install install
 COPY . src/storm32_gimbal
 
 
