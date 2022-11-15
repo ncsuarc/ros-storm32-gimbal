@@ -22,7 +22,6 @@ Before proceeding, make sure to install all dependencies by running:
 ```bash
 rosdep update
 rosdep install storm32_gimbal
-python3 -m pip install transforms3d
 ```
 
 ## Compiling
